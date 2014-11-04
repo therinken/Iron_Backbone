@@ -1,9 +1,9 @@
 (function(window, undefined) {
     "use strict";
 
-    var fsVenueView = Backbone.View.extend({
+    var scTrackView = Backbone.View.extend({
         tagName: "div",
-        className: "fsVenue",
+        className: "scTracks",
         initialize: function(opts) {
             // 1. Sometimes it will be instantiated without options, so to guard against errors:
             this.options = _.extend(
@@ -11,7 +11,7 @@
                 {
                     $container: $('body')
                 },
-                opts
+                options
             );
 
             // 2. Part of putting a view into its initial state is to put its element
@@ -23,34 +23,36 @@
             // 3. Render the content of the view
             this.render();
         },
-        template: "<h1>{name}</h1><hr><ul><li>{location.lat}</li><li>{location.lng}</li></ul>",
+        template: "<h1>{name}</h1><hr><ul><li>{}</li><li>{}</li></ul>",
         render: function(){
             this.el.innerHTML = _.template(this.template, this.options);
         }
     })
 
-    function FoursquareClient(options) {
+    function SoundcloudClient(options) {
         this.options = _.extend({}, options, {
-            clientid: "NLZAOKRUP1KFSRFHA1SQO3DH2214LAF0QV4UTEGMBHQG020Y",
-            clientkey: "UUCRXDQ2R1YITE04WPG0CAS40UBYREIAZTX0D0JZ0A2TEUX5"
+            clientid: "01176e5bfd8c188335dcc943e52f1f98",
+            clientkey: "1a3d85a7da1411ecce49d1b403799846"
         });
 
         this.init();
     }
 
-    FoursquareClient.prototype.queryAPI = function(search_term, coordinates) {
+    SoundcloudClient.prototype.queryAPI = function(search_term, coordinates) {
+        <script>
+var processTracks = function(tracks) {
+  for (var i = 0; i < tracks.length; i++) {
+    console.log(track.title);
+  }
+};
+</script>
         var url = [
-            "https://api.foursquare.com/v2/venues/search",
+            "https://api.soundcloud.com/tracks.json",
             "?client_id=",
             this.options.clientid,
             "&client_secret=",
             this.options.clientkey,
-            "&v=20130815",
-            "&ll=",
-            coordinates.coords.latitude,
-            ',',
-            coordinates.coords.longitude,
-            "&query=",
+            "&callback=",
             search_term
         ];
 
@@ -59,7 +61,7 @@
         });
     };
 
-    FoursquareClient.prototype.getGeo = function() {
+  /*  SoundcloudClient.prototype.getGeo = function() {
         var promise = $.Deferred();
         navigator.geolocation.getCurrentPosition(function(){
             promise.resolve(arguments[0]);
@@ -67,7 +69,7 @@
         return promise;
     };
 
-    FoursquareClient.prototype.makeFoursquareRequest = function(coordinates) {
+    SoundcloudClient.prototype.makeSoundcloudRequest = function(coordinates) {
         $.when(
             this.queryAPI("sushi", coordinates)
         ).then(function(){
@@ -87,7 +89,7 @@
         })
     };
 
-    FoursquareClient.prototype.init = function() {
+    SoundcloudClient.prototype.init = function() {
         var self = this;
         this.getGeo().then(function(coordinates){
 
@@ -96,5 +98,6 @@
         })
     };
 
-    window.FoursquareClient = FoursquareClient;
+    window.SoundcloudClient = SoundcloudClient;
 })(window, undefined);
+*/
