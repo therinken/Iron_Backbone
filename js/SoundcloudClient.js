@@ -1,103 +1,59 @@
-(function(window, undefined) {
-    "use strict";
-
-    var scTrackView = Backbone.View.extend({
-        tagName: "div",
-        className: "scTracks",
-        initialize: function(opts) {
-            // 1. Sometimes it will be instantiated without options, so to guard against errors:
-            this.options = _.extend(
-                {},
-                {
-                    $container: $('body')
-                },
-                options
-            );
-
-            // 2. Part of putting a view into its initial state is to put its element
-            //    into the DOM. Its container should be configurable using an option
-            //    so that a) it can be used anywhere in the app and b) it can be
-            //    easily unit tested.
-            this.options.$container.append(this.el);
-
-            // 3. Render the content of the view
-            this.render();
-        },
-        template: "<h1>{name}</h1><hr><ul><li>{}</li><li>{}</li></ul>",
-        render: function(){
-            this.el.innerHTML = _.template(this.template, this.options);
-        }
-    })
-
-    function SoundcloudClient(options) {
-        this.options = _.extend({}, options, {
-            clientid: "01176e5bfd8c188335dcc943e52f1f98",
-            clientkey: "1a3d85a7da1411ecce49d1b403799846"
-        });
-
-        this.init();
-    }
-
-    SoundcloudClient.prototype.queryAPI = function(search_term, coordinates) {
-        <script>
-var processTracks = function(tracks) {
-  for (var i = 0; i < tracks.length; i++) {
-    console.log(track.title);
-  }
+window.App = {
+  Models: {},
+  Collections: {},
+  Views: {}
 };
-</script>
-        var url = [
-            "https://api.soundcloud.com/tracks.json",
-            "?client_id=",
-            this.options.clientid,
-            "&client_secret=",
-            this.options.clientkey,
-            "&callback=",
-            search_term
-        ];
 
-        return $.get(url.join('')).then(function(){
-            return arguments[0];
-        });
-    };
+App.Models.Track = Backbone.Model.extend();
 
-  /*  SoundcloudClient.prototype.getGeo = function() {
-        var promise = $.Deferred();
-        navigator.geolocation.getCurrentPosition(function(){
-            promise.resolve(arguments[0]);
-        });
-        return promise;
-    };
+App.Collections.Tracks = Backbone.Collection.extend({
+  model: App.Models.Track,
+  url: 'http://api.soundcloud.com/tracks'
+});
 
-    SoundcloudClient.prototype.makeSoundcloudRequest = function(coordinates) {
-        $.when(
-            this.queryAPI("sushi", coordinates)
-        ).then(function(){
-            if(
-                !arguments[0] ||
-                !arguments[0].response ||
-                !arguments[0].response.venues ||
-                !(arguments[0].response.venues instanceof Array)
-            ){
-                throw new Error("array of venues not piped from queryAPI");
-            }
+App.Views.Tracks = Backbone.View.extend({
+  tagName: 'ol',
+  initialize: function() {
+    //var model = new App.Models.Track({id: 'asdf'});
+    //this.collection.add(model);
+    //this.collection.on('add', this.render);
 
-            arguments[0].response.venues.forEach(function(data){
-                new fsVenueView(data);
-            })
+    this.collection.on('sync', this.render, this);
+  },
+  render: function() {
+    this.$el.empty();
+    console.log('collection: ', this.collection);
+    this.collection.each(this.addOne, this);
+    return this;
+  },
+  addOne: function(track) {
+    console.log('model: ', track);
+    var trackView = new App.Views.Track({ model: track });
+    this.$el.append(trackView.render().el);
+  }
+});
 
-        })
-    };
+App.Views.Track = Backbone.View.extend({
+  tagName: 'li',
+  template: _.template($('#trackTemplate').html()),
+  render: function() {
+    this.$el.html(this.template(this.model.attributes));
+    return this;
+  }
+});
 
-    SoundcloudClient.prototype.init = function() {
-        var self = this;
-        this.getGeo().then(function(coordinates){
+var tracks = new App.Collections.Tracks();
+tracks.fetch({
+  data: {
+    format: 'json',
+    client_id: '01176e5bfd8c188335dcc943e52f1f98',
+    genres: 'ambient',
+    limit: '5'
+  }
+});
 
-            self.makeFoursquareRequest(coordinates);
+var app = new App.Views.Tracks({
+  collection: tracks
+});
 
-        })
-    };
-
-    window.SoundcloudClient = SoundcloudClient;
-})(window, undefined);
-*/
+$('.tracks').html(app.render().el);
