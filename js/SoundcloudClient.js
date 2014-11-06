@@ -8,7 +8,7 @@ App.Models.Track = Backbone.Model.extend();
 
 App.Collections.Tracks = Backbone.Collection.extend({
   model: App.Models.Track,
-  url: 'http://api.soundcloud.com/tracks'
+  url: 'https://api.soundcloud.com/tracks'
 });
 
 App.Views.Tracks = Backbone.View.extend({
@@ -47,7 +47,8 @@ tracks.fetch({
   data: {
     format: 'json',
     client_id: '01176e5bfd8c188335dcc943e52f1f98',
-    genres: 'ambient',
+    genres: 'dnb',
+    order: 'hotness',
     limit: '5'
   }
 });

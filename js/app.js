@@ -16,6 +16,7 @@ function app() {
         url: "./js/SoundcloudClient.js"
     }).then(function() {
         _.templateSettings.interpolate = /{([\s\S]+?)}/g;
-    })
+            
+    });
 
 }
