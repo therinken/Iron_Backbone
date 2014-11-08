@@ -1,35 +1,44 @@
-var AllTracksView = Backbone.View.extend({
+window.App = {
+    Models: {},
+    Collections: {},
+    Views: {}
+};
+
+
+App.Views.Tracks = Backbone.View.extend({
     tagName: 'ol',
     initialize: function() {
-        _.bindAll(this, "render");
-        var self = this;
-        trackster.fetch('/tracks', {
+        var tracks = new App.Collections.Tracks();
+        tracks.fetch({
+            data: {
+                format: 'json',
+                client_id: '9f71c1134013b218057ea215865270fc',
                 genres: 'ambient',
                 order: 'hotness',
                 limit: '5'
-            },
-            function(tracks, error) {
-                if (error) console.log('ERROR: ', error);
-                _.each(tracks, function(value, index) {
-                    self.collection.add(new SingleTrack(value));
-                });
-                //var model = new SingleTrack({id: 'asdf'});
-                //this.collection.add(model);
-                //this.collection.on('add', this.render);
-
-                self.collection.on('sync', this.render, this);
-                self.render();
             }
+        });
 
-        )
+        var app = new App.Views.Tracks({
+            collection: tracks
+        });
 
+        $('.tracks').html(app.render().el);
+        //var model = new App.Models.Track({id: 'asdf'});
+        //this.collection.add(model);
+        //this.collection.on('add', this.render);
+
+        this.collection.on('sync', this.render, this);
     },
     render: function() {
+        this.$el.empty();
+        console.log('collection: ', this.collection);
         this.collection.each(this.addOne, this);
         return this;
     },
     addOne: function(track) {
-        var trackView = new SingleTrackView({
+        console.log('model: ', track);
+        var trackView = new App.Views.Track({
             model: track
         });
         this.$el.append(trackView.render().el);

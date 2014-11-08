@@ -1,5 +1,10 @@
-var TrackCollection = Backbone.Collection.extend({
+window.App = {
+  Models: {},
+  Collections: {},
+  Views: {}
+};
 
-  model: SingleTrack
-  
+App.Collections.Tracks = Backbone.Collection.extend({
+  model: App.Models.Track,
+  url: 'http://api.soundcloud.com/tracks'
 });

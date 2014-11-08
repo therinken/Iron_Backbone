@@ -12,15 +12,7 @@ function app() {
     }, {
         url: "./bower_components/backbone/backbone.js"
     }, {
-        url: "./bower_components/pathjs/path.min.js"
-    }, {
-        url: "./js/views/allTracksView.js"
-    }, {
-        url: "./js/views/singleTrackView.js"
-    }, {
-        url: "./js/models/singleTrack.js"
-    }, {
-        url: "./js/collections/allTracks.js"
+        url: "./js/main.js"
     }).then(function() {
         _.templateSettings.interpolate = /\{([\s\S]+?)\}/g;
 
