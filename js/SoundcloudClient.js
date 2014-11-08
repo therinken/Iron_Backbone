@@ -1,50 +1,13 @@
-window.App = {
-  Models: {},
-  Collections: {},
-  Views: {}
-};
+var SingleTrack = Backbone.Model.extend({});
+var SingleTrackView = Backbone.View.extend({});
+var AllTracksView = Backbone.View.extend({});
+var TrackCollection = Backbone.Collection.extend({});
 
-App.Models.Track = Backbone.Model.extend();
 
-App.Collections.Tracks = Backbone.Collection.extend({
-  model: App.Models.Track,
-  url: 'https://api.soundcloud.com/tracks'
-});
-
-App.Views.Tracks = Backbone.View.extend({
-  tagName: 'ol',
-  initialize: function() {
-    //var model = new App.Models.Track({id: 'asdf'});
-    //this.collection.add(model);
-    //this.collection.on('add', this.render);
-
-    this.collection.on('sync', this.render, this);
-  },
-  render: function() {
-    this.$el.empty();
-    console.log('collection: ', this.collection);
-    this.collection.each(this.addOne, this);
-    return this;
-  },
-  addOne: function(track) {
-    console.log('model: ', track);
-    var trackView = new App.Views.Track({ model: track });
-    this.$el.append(trackView.render().el);
-  }
-});
-
-App.Views.Track = Backbone.View.extend({
-  tagName: 'li',
-  template: _.template($('#trackTemplate').html()),
-  render: function() {
-    this.$el.html(this.template(this.model.attributes));
-    return this;
-  }
-});
-
-var tracks = new App.Collections.Tracks();
+var tracks = new TrackCollection();
 tracks.fetch({
   data: {
+    url: 'http://api.soundcloud.com/tracks'
     format: 'json',
     client_id: '01176e5bfd8c188335dcc943e52f1f98',
     genres: 'dnb',
@@ -53,7 +16,7 @@ tracks.fetch({
   }
 });
 
-var app = new App.Views.Tracks({
+var app = new AllTracksView({
   collection: tracks
 });
 

@@ -13,10 +13,19 @@ function app() {
     }, {
         url: "./bower_components/pathjs/path.min.js"
     }, {
-        url: "./js/SoundcloudClient.js"
+        url: "./js/views/singleTrackView.js"
+    }, {
+        url: "./js/models/singleTrack.js"
+    }, {
+        url: "./js/views/allTracksView.js"
+    }, {
+        url: "./js/collections/allTracks.js"
+    },
+    {   url: "./js/SoundcloudClient.js"
+
     }).then(function() {
         _.templateSettings.interpolate = /{([\s\S]+?)}/g;
-            
+
     });
 
 }
