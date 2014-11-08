@@ -4,12 +4,9 @@ var AllTracksView = Backbone.View.extend({});
 var TrackCollection = Backbone.Collection.extend({});
 
 SC.initialize({
-    client_id: '01176e5bfd8c188335dcc943e52f1f98'
+    client_id: '9f71c1134013b218057ea215865270fc',
+    redirect_uri: 'http://k-backbone.herokuapp.com'
 });
-
-window.template = function(id) {
-    return _.template($('#' + id).html());
-};
 
 var trackster = new TrackCollection();
 

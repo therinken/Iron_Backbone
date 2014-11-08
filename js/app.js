@@ -14,11 +14,11 @@ function app() {
     }, {
         url: "./bower_components/pathjs/path.min.js"
     }, {
-        url: "./js/models/singleTrack.js"
+        url: "./js/views/allTracksView.js"
     }, {
         url: "./js/views/singleTrackView.js"
     }, {
-        url: "./js/views/allTracksView.js"
+        url: "./js/models/singleTrack.js"
     }, {
         url: "./js/collections/allTracks.js"
     }, {   

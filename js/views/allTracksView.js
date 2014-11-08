@@ -3,14 +3,10 @@ var AllTracksView = Backbone.View.extend({
     initialize: function() {
         _.bindAll(this, "render");
         var self = this;
-        tracks.fetch('/tracks', {
-                data: {
-                    format: 'json',
-                    client_id: '01176e5bfd8c188335dcc943e52f1f98',
-                    genres: 'ambient',
-                    order: 'hotness',
-                    limit: '5'
-                }
+        trackster.fetch('/tracks', {
+                genres: 'ambient',
+                order: 'hotness',
+                limit: '5'
             },
             function(tracks, error) {
                 if (error) console.log('ERROR: ', error);
