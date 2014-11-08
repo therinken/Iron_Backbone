@@ -1,12 +1,13 @@
 var SingleTrackView = Backbone.View.extend({
 
-  tagName: 'li',
-  template: _.template($('#trackElement').html()),
+    tagName: 'li',
+    template: _.template($('#trackElement').html()),
 
+    initialize: function() {},
 
-  render: function() {
-	var trackTemplate = this.template(this.model.toJSON());
-    this.$el.html(trackTemplate);
-    return this;
-  }
+    render: function() {
+        var template = this.template(this.model.toJSON());
+        this.$el.html(template);
+        return this;
+    }
 });

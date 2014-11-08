@@ -12,12 +12,12 @@
     <h1>Ambient Top 5 on Soundcloud</h1>
     <div class='tracks'>
         <script id="trackElement" type="text/template">
-            <iframe src="https://w.soundcloud.com/player?url=http://api.soundcloud.com/tracks/{id}" width="100%" frameborder="no"></iframe>
+            <iframe src="http://w.soundcloud.com/player?url=http://api.soundcloud.com/tracks/<%= id %>" width="100%" frameborder="no">
         </script>
     </div>
 
 
-    <script src="http://connect.soundcloud.com/sdk.js"></script>
+    <script src="https://connect.soundcloud.com/sdk.js"></script>
     <script type="text/javascript" src="./bower_components/Loader/loader.js" id="loaderjs" data-app="./js/app.js"></script>
 
 </body>
